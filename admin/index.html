@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data: blob:; connect-src 'self' https:; frame-src 'self' https:; object-src 'none'; base-uri 'self';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+<title>Panel Administrador - F&Z Store</title>
+    
+    
+    <link rel=\"icon\" type=\"image/png\" href=\"../img/logo.png\" />
+<!-- CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../img/logo.png" />
+</head>
+<body class="admin-page">
+    <!-- Sidebar de administración -->
+    <nav class="admin-sidebar">
+        <div class="admin-logo">
+            <img src="../img/logo.png" alt="F&Z Store">
+            <span class="logo-text">F&Z Admin</span>
+        </div>
+        
+        <div class="admin-user">
+            <div class="user-avatar">
+                <i class="fas fa-user-cog"></i>
+            </div>
+            <div class="user-info">
+                <h4 id="admin-username">Administrador</h4>
+                <span class="user-role">Super Admin</span>
+            </div>
+        </div>
+        
+        <ul class="admin-menu">
+            <li class="menu-item active">
+                <a href="#" data-page="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" data-page="productos">
+                    <i class="fas fa-box"></i>
+                    <span>Productos</span>
+                    <span class="badge" id="productos-count">0</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" data-page="categorias">
+                    <i class="fas fa-tags"></i>
+                    <span>Categorías</span>
+                    <span class="badge" id="categorias-count">0</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" data-page="pedidos">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Pedidos</span>
+                    <span class="badge badge-warning" id="pedidos-pendientes">0</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" data-page="usuarios">
+                    <i class="fas fa-users"></i>
+                    <span>Usuarios</span>
+                    <span class="badge" id="usuarios-count">0</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" data-page="ventas">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Ventas</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <a href="../index.html" class="btn-sidebar">
+                <i class="fas fa-store"></i>
+                <span>Ir a la Tienda</span>
+            </a>
+            <button class="btn-sidebar btn-logout" id="admin-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar Sesión</span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="admin-content">
+        <!-- Header del admin -->
+        <header class="admin-header">
+            <div class="header-left">
+                <button class="menu-toggle" id="admin-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="page-title">Dashboard</h1>
+            </div>
+            
+            <!-- Header right (search/notifications removidos por solicitud) -->
+        </header>
+        
+        <!-- Contenido dinámico -->
+        <div class="admin-pages">
+            <!-- Dashboard -->
+            <div class="admin-page-content active" id="page-dashboard">
+                <div class="page-header">
+                    <h2>Resumen General</h2>
+                    <p>Estadísticas y actividad reciente</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon total-ventas">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-ventas">₡0.00</h3>
+                            <p>Ventas Totales</p>
+                        </div>
+                        <span class="stat-trend positive">+12.5%</span>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon total-pedidos">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-pedidos">0</h3>
+                            <p>Pedidos Totales</p>
+                        </div>
+                        <span class="stat-trend positive">+8.2%</span>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon total-productos">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-productos">0</h3>
+                            <p>Productos</p>
+                        </div>
+                        <span class="stat-trend positive">+5.7%</span>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon total-usuarios">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-usuarios">0</h3>
+                            <p>Usuarios</p>
+                        </div>
+                        <span class="stat-trend positive">+3.4%</span>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Ventas Recientes</h3>
+                            <select class="select-period">
+                                <option value="7">Últimos 7 días</option>
+                                <option value="30">Últimos 30 días</option>
+                                <option value="90">Últimos 90 días</option>
+                            </select>
+                        </div>
+                        <div class="chart-placeholder" id="sales-chart">
+                            <div class="loading-chart">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>Cargando gráfico...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-orders">
+                        <div class="orders-header">
+                            <h3>Pedidos Recientes</h3>
+                            <a href="#" class="btn-view-all">Ver todos</a>
+                        </div>
+                        <div class="orders-list" id="recent-orders">
+                            <div class="loading-orders">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>Cargando pedidos...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Productos -->
+            <div class="admin-page-content" id="page-productos">
+                <!-- Se completará con JS -->
+            </div>
+            
+            <!-- Categorías -->
+            <div class="admin-page-content" id="page-categorias">
+                <!-- Se completará con JS -->
+            </div>
+            
+            <!-- Pedidos -->
+            <div class="admin-page-content" id="page-pedidos">
+                <!-- Se completará con JS -->
+            </div>
+            
+            <!-- Usuarios -->
+            <div class="admin-page-content" id="page-usuarios">
+                <!-- Se completará con JS -->
+            </div>
+            
+            <!-- Ventas -->
+            <div class="admin-page-content" id="page-ventas">
+                <!-- Se completará con JS -->
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal para editar/crear -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-container" id="modal-container">
+            <!-- Contenido dinámico -->
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <script src="../js/helpers.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>

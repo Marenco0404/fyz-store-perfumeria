@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data: blob:; connect-src 'self' https:; frame-src 'self' https:; object-src 'none'; base-uri 'self';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+<title>F&Z Store - Perfumería y Sex Shop</title>
+
+  <link rel="icon" type="image/png" href="img/logo.png" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <meta name="description" content="Tienda online de perfumería y sex shop. Productos de calidad, envíos discretos y seguridad garantizada." />
+  <meta name="keywords" content="perfumes, sex shop, tienda online, compras" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="index.html" class="logo">
+          <img src="img/logo.png" alt="F&Z Store" />
+          <span class="logo-text">F&Z Store</span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="index.html" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+          <li><a href="perfumeria.html"><i class="fas fa-spray-can"></i> Perfumería</a></li>
+          <li><a href="sexshop.html"><i class="fas fa-heart"></i> Sex Shop</a></li>
+          <li><a href="carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+
+          <!-- Usuario -->
+          <li class="user-menu-container">
+            <div class="user-menu" id="user-menu">
+              <span class="user-name" id="user-name"><i class="fas fa-user"></i> Iniciar Sesión</span>
+              <div class="user-dropdown" id="user-dropdown">
+                <a href="login.html" id="login-link"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+                <a href="registro.html" id="register-link"><i class="fas fa-user-plus"></i> Registrarse</a>
+                <a href="#" id="admin-link" style="display:none;"><i class="fas fa-cog"></i> Panel Admin</a>
+                <a href="mis_pedidos.html" id="orders-link" style="display:none;"><i class="fas fa-box"></i> Mis Pedidos</a>
+                <a href="#" id="logout-link" style="display:none;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Carrito -->
+        <div class="cart-icon" id="cart-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cart-count">0</span>
+
+          <div class="cart-dropdown" id="cart-dropdown">
+            <h4><i class="fas fa-shopping-bag"></i> Tu Carrito</h4>
+            <div class="cart-items" id="cart-dropdown-items"></div>
+            <div class="cart-total">
+              <span>Total:</span>
+              <span id="cart-dropdown-total">₡0.00</span>
+            </div>
+            <div class="cart-actions">
+              <a href="carrito.html" class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i> Ver Carrito</a>
+              <a href="finalizarcompra.html" class="btn btn-primary btn-sm"><i class="fas fa-credit-card"></i> Pagar</a>
+            </div>
+          </div>
+        </div>
+
+        <button class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero / Carrusel (simple, sin depender de variables raras) -->
+  <section class="hero-carousel" id="hero-carousel">
+    <div class="carousel-slide active" style="background-image:url('img/bannerbienvenida.gif');">
+      <div class="carousel-content">
+        <h2 class="carousel-title">FYZ</h2>
+        <p class="carousel-text">Fragancias únicas para cada ocasión y productos intimos</p>
+        <a href="perfumeria.html" class="btn btn-primary btn-lg"><i class="fas fa-shopping-bag"></i> Ver Colección</a>
+      </div>
+    </div>
+
+    <div class="carousel-slide" style="background-image:url('img/bannersex.gif');">
+      <div class="carousel-content">
+        <h2 class="carousel-title">Sex Shop Discreto</h2>
+        <p class="carousel-text">Privacidad y confidencialidad garantizada</p>
+        <a href="sexshop.html" class="btn btn-primary btn-lg"><i class="fas fa-heart"></i> Explorar</a>
+      </div>
+    </div>
+
+    <div class="carousel-slide" style="background-image:url('img/carrusel/slide3.jpg');">
+      <div class="carousel-content">
+        <h2 class="carousel-title">Ofertas Especiales</h2>
+        <p class="carousel-text">Descuentos en productos seleccionados</p>
+        <a href="perfumeria.html" class="btn btn-primary btn-lg"><i class="fas fa-tag"></i> Ver Ofertas</a>
+      </div>
+    </div>
+
+    <button class="carousel-btn prev" id="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+    <button class="carousel-btn next" id="carousel-next"><i class="fas fa-chevron-right"></i></button>
+
+    <div class="carousel-indicators">
+      <span class="indicator active" data-slide="0"></span>
+      <span class="indicator" data-slide="1"></span>
+      <span class="indicator" data-slide="2"></span>
+    </div>
+  </section>
+
+  <!-- Productos destacados -->
+  <section class="featured-products">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Productos Destacados</h2>
+        <p class="section-subtitle">Lo más popular de la tienda</p>
+      </div>
+      <div class="products-grid" id="featured-products">
+        <div class="loading-products"><i class="fas fa-spinner fa-spin"></i> Cargando productos...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (simple) -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        
+        <div class="footer-links">
+          <a href="quienes-somos.html">Quiénes somos</a>
+          <a href="terminos.html">Términos y Condiciones</a>
+          <a href="privacidad.html">Política de Privacidad</a>
+          <a href="aviso-legal.html">Aviso Legal</a>
+        </div>
+
+<div class="copyright">
+          <p>&copy; 2026 F&Z Store. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js" defer></script>
+
+  <!-- Scripts con defer para no bloquear parsing -->
+  <script src="js/helpers.js" defer></script>
+  <script src="js/performance-config.js" defer></script>
+  <script src="js/firebase-config.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/carrito.js" defer></script>
+  <script src="js/productos.js" defer></script>
+  <script src="js/app.js" defer></script>
+
+  <!-- Service Worker para caché -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+
+  <script>
+    // Carrusel mínimo (no choca con app.js)
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+      const indicators = Array.from(document.querySelectorAll('.indicator'));
+      const prevBtn = document.getElementById('carousel-prev');
+      const nextBtn = document.getElementById('carousel-next');
+
+      if (!slides.length) return;
+      let current = 0;
+
+      const paint = (idx) => {
+        slides.forEach(s => s.classList.remove('active'));
+        indicators.forEach(i => i.classList.remove('active'));
+        current = (idx + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        if (indicators[current]) indicators[current].classList.add('active');
+      };
+
+      prevBtn?.addEventListener('click', () => paint(current - 1));
+      nextBtn?.addEventListener('click', () => paint(current + 1));
+      indicators.forEach((el, i) => el.addEventListener('click', () => paint(i)));
+
+      setInterval(() => paint(current + 1), 5000);
+    });
+  </script>
+</body>
+</html>

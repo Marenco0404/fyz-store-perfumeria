@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: https://www.paypal.com https://www.sandbox.paypal.com https://c.paypal.com https://t.paypal.com; connect-src 'self' https: https://www.paypal.com https://www.sandbox.paypal.com https://api.paypal.com https://api.sandbox.paypal.com https://c.paypal.com; font-src 'self' https: data:; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; frame-src 'self' https: https://www.paypal.com https://www.sandbox.paypal.com https://c.paypal.com;">
+    <title>✨ Finalizar Compra - F&Z Store v4.0 NUEVO DISEÑO</title>
+    <link rel="icon" type="image/png" href="img/logo.png" />
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #ffffff;
+        }
+
+        .checkout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 2px solid #333333;
+        }
+
+        .checkout-header h1 {
+            font-size: 28px;
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        .checkout-header p {
+            color: #cccccc;
+            font-size: 14px;
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .progress-step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #333333;
+            color: #888888;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 8px;
+            transition: all 0.3s ease;
+            border: 2px solid #444444;
+        }
+
+        .progress-step.active .progress-step-number {
+            background: #8a4af3;
+            color: white;
+            border-color: #8a4af3;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(138, 74, 243, 0.3);
+        }
+
+        .progress-step.completed .progress-step-number {
+            background: #2ecc71;
+            color: white;
+            border-color: #2ecc71;
+        }
+
+        .progress-step-text {
+            font-size: 12px;
+            color: #888888;
+            font-weight: 500;
+        }
+
+        .progress-step.active .progress-step-text {
+            color: #8a4af3;
+        }
+
+        /* Main Layout */
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sections */
+        .checkout-section {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #333333;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .checkout-section:hover {
+            box-shadow: 0 5px 15px rgba(138, 74, 243, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #333333;
+        }
+
+        .section-header h2 {
+            font-size: 18px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        .section-header i {
+            color: #8a4af3;
+            font-size: 20px;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #cccccc;
+            font-size: 13px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #444444;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #2a2a2a;
+            color: #ffffff;
+        }
+
+        .form-group input::placeholder {
+            color: #666666;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #8a4af3;
+            box-shadow: 0 0 0 3px rgba(138, 74, 243, 0.15);
+            background: #333333;
+        }
+
+        .form-group input:invalid {
+            border-color: #e74c3c;
+        }
+
+        /* Messages */
+        .message-box {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            display: none;
+            border-left: 4px solid;
+            font-size: 13px;
+        }
+
+        .message-box.show {
+            display: block;
+        }
+
+        .message-box.error {
+            background: rgba(231, 76, 60, 0.1);
+            border-left-color: #e74c3c;
+            color: #ff9999;
+        }
+
+        .message-box.success {
+            background: rgba(46, 204, 113, 0.1);
+            border-left-color: #2ecc71;
+            color: #90ee90;
+        }
+
+        .message-box.info {
+            background: rgba(52, 152, 219, 0.1);
+            border-left-color: #3498db;
+            color: #87ceeb;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8a4af3 0%, #ff4081 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138, 74, 243, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #444444;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: #333333;
+            color: #cccccc;
+            border: 1px solid #444444;
+        }
+
+        .btn-secondary:hover {
+            background: #444444;
+            color: #ffffff;
+        }
+
+        /* Summary Sidebar */
+        .summary-sidebar {
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-card {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #333333;
+        }
+
+        .summary-card h3 {
+            font-size: 16px;
+            color: #ffffff;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        .summary-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #333333;
+        }
+
+        .summary-item {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #cccccc;
+        }
+
+        .summary-item-image {
+            width: 50px;
+            height: 50px;
+            background: #2a2a2a;
+            border-radius: 6px;
+            flex-shrink: 0;
+            overflow: hidden;
+            border: 1px solid #333333;
+        }
+
+        .summary-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .summary-item-info {
+            flex: 1;
+        }
+
+        .summary-item-name {
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .summary-item-details {
+            color: #888888;
+            font-size: 12px;
+        }
+
+        .summary-item-price {
+            font-weight: 600;
+            color: #8a4af3;
+            text-align: right;
+        }
+
+        .summary-totals {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #cccccc;
+        }
+
+        .summary-row.total {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            border-top: 1px solid #333333;
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        .summary-row.usd {
+            font-size: 12px;
+            color: #888888;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            border: 2px solid #333333;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #2a2a2a;
+        }
+
+        .payment-method input {
+            width: auto;
+            margin: 0;
+        }
+
+        .payment-method:hover {
+            border-color: #8a4af3;
+            background: rgba(138, 74, 243, 0.05);
+        }
+
+        .payment-method.selected {
+            border-color: #8a4af3;
+            background: rgba(138, 74, 243, 0.1);
+        }
+
+        .payment-method-info {
+            flex: 1;
+        }
+
+        .payment-method-title {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .payment-method-desc {
+            font-size: 12px;
+            color: #888888;
+        }
+
+        .payment-method-icon {
+            font-size: 24px;
+            color: #8a4af3;
+        }
+
+        /* PayPal Button Container */
+        #paypal-button-container {
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(138, 74, 243, 0.05);
+            border-radius: 4px;
+            border: 1px dashed #3498db;
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Utilities */
+        .text-center { text-align: center; }
+        .mt-20 { margin-top: 20px; }
+        .mb-20 { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="img/logo.png" alt="F&Z Store">
+                    <span class="logo-text">F&Z Store</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                </ul>
+                <button class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="checkout-container">
+        <!-- Header -->
+        <div class="checkout-header">
+            <h1>🛒 Finalizar Compra</h1>
+            <p>Completa tu información para procesar el pago</p>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="progress-step active" id="step-1">
+                <div class="progress-step-number">1</div>
+                <div class="progress-step-text">Envío</div>
+            </div>
+            <div class="progress-step" id="step-2">
+                <div class="progress-step-number">2</div>
+                <div class="progress-step-text">Pago</div>
+            </div>
+            <div class="progress-step" id="step-3">
+                <div class="progress-step-number">3</div>
+                <div class="progress-step-text">Confirmación</div>
+            </div>
+        </div>
+
+        <!-- Checkout Grid -->
+        <div class="checkout-grid">
+            <!-- Left Column: Form -->
+            <div>
+                <!-- Error Message -->
+                <div id="checkout-error" class="message-box error"></div>
+
+                <!-- Step 1: Shipping -->
+                <section class="checkout-section" id="shipping-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-truck"></i> Información de Envío</h2>
+                    </div>
+
+                    <form id="shipping-form" class="checkout-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="shipping-first-name">Nombre *</label>
+                                <input type="text" id="shipping-first-name" placeholder="Juan" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="shipping-last-name">Apellido *</label>
+                                <input type="text" id="shipping-last-name" placeholder="Pérez" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shipping-email">Email *</label>
+                            <input type="email" id="shipping-email" placeholder="tu@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shipping-phone">Teléfono *</label>
+                            <input type="tel" id="shipping-phone" placeholder="+506 8123 4567" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shipping-address">Dirección *</label>
+                            <input type="text" id="shipping-address" placeholder="Calle 1, Casa 123" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="shipping-city">Ciudad *</label>
+                                <input type="text" id="shipping-city" placeholder="San José" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="shipping-postal">Código Postal</label>
+                                <input type="text" id="shipping-postal" placeholder="10101">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shipping-country">País</label>
+                            <select id="shipping-country">
+                                <option value="CR">Costa Rica</option>
+                                <option value="PA">Panamá</option>
+                                <option value="NI">Nicaragua</option>
+                            </select>
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary" id="back-to-cart">
+                                <i class="fas fa-arrow-left"></i> Volver
+                            </button>
+                            <button type="button" class="btn btn-primary" id="continue-to-payment">
+                                Continuar a Pago <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Step 2: Payment -->
+                <section class="checkout-section" id="payment-section" style="display:none;">
+                    <div class="section-header">
+                        <h2><i class="fas fa-credit-card"></i> Método de Pago</h2>
+                    </div>
+
+                    <div class="payment-methods">
+                        <label class="payment-method selected" id="paypal-method">
+                            <input type="radio" name="payment-method" value="paypal" checked>
+                            <div class="payment-method-icon">
+                                <i class="fab fa-paypal"></i>
+                            </div>
+                            <div class="payment-method-info">
+                                <div class="payment-method-title">PayPal</div>
+                                <div class="payment-method-desc">Paga de forma segura con tu cuenta PayPal</div>
+                            </div>
+                        </label>
+
+                        <label class="payment-method" id="card-method">
+                            <input type="radio" name="payment-method" value="card" disabled>
+                            <div class="payment-method-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="payment-method-info">
+                                <div class="payment-method-title">Tarjeta de Crédito</div>
+                                <div class="payment-method-desc">Próximamente disponible</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div id="paypal-button-container"></div>
+
+                    <div class="btn-group mt-20">
+                        <button type="button" class="btn btn-secondary" id="back-to-shipping">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Summary -->
+            <aside class="summary-sidebar">
+                <div class="summary-card">
+                    <h3><i class="fas fa-receipt"></i> Resumen</h3>
+                    <div class="summary-items" id="summary-items"></div>
+
+                    <div class="summary-totals">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="summary-subtotal">₡0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Envío:</span>
+                            <span id="summary-shipping">Gratis</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="summary-total">₡0</span>
+                        </div>
+                        <div class="summary-row usd">
+                            <span id="summary-total-usd"></span>
+                        </div>
+                    </div>
+
+                    <div class="message-box info" style="display:block; margin-top:16px; margin-bottom:0;">
+                        <i class="fas fa-lock"></i> Tu información está protegida con SSL
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="js/helpers.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/paypal-simple.js"></script>
+    <script src="js/checkout.js"></script>
+    <script src="js/verificador-paypal.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

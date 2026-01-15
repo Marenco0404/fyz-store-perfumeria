@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data: blob:; connect-src 'self' https:; frame-src 'self' https:; object-src 'none'; base-uri 'self';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+<title>Confirmación de Compra - F&Z Store</title>
+    
+    
+    <link rel=\"icon\" type=\"image/png\" href=\"img/logo.png\" />
+<!-- CSS -->
+  <link rel="icon" type="image/png" href="img/logo.png" />
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/checkout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header (mismo que index.html) -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="img/logo.png" alt="F&Z Store">
+                    <span class="logo-text">F&Z Store</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="perfumeria.html"><i class="fas fa-spray-can"></i> Perfumería</a></li>
+                    <li><a href="sexshop.html"><i class="fas fa-heart"></i> Sex Shop</a></li>
+                    <li><a href="carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                    
+                    <li class="user-menu-container">
+                        <div class="user-menu" id="user-menu">
+                            <span class="user-name" id="user-name">
+                                <i class="fas fa-user"></i> Iniciar Sesión
+                            </span>
+                            <div class="user-dropdown" id="user-dropdown">
+                                <a href="login.html" id="login-link"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+                                <a href="registro.html" id="register-link"><i class="fas fa-user-plus"></i> Registrarse</a>
+                                <a href="#" id="admin-link" style="display: none;"><i class="fas fa-cog"></i> Panel Admin</a>
+                                <a href="mis_pedidos.html" id="orders-link" style="display: none;"><i class="fas fa-box"></i> Mis Pedidos</a>
+                                <a href="#" id="logout-link" style="display: none;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="cart-icon" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                    
+                    <div class="cart-dropdown" id="cart-dropdown">
+                        <h4><i class="fas fa-shopping-bag"></i> Tu Carrito</h4>
+                        <div class="cart-items" id="cart-dropdown-items">
+                            <!-- Los productos se cargarán aquí -->
+                        </div>
+                        <div class="cart-total">
+                            <span>Total:</span>
+                            <span id="cart-dropdown-total">₡0.00</span>
+                        </div>
+                        <div class="cart-actions">
+                            <a href="carrito.html" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-eye"></i> Ver Carrito
+                            </a>
+                            <a href="finalizarcompra.html" class="btn btn-primary btn-sm">
+                                <i class="fas fa-credit-card"></i> Pagar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Página de confirmación -->
+    <main class="confirmation-page">
+        <div class="container">
+            <div class="confirmation-container">
+                <!-- Icono de éxito -->
+                <div class="confirmation-icon success">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                
+                <h1 class="confirmation-title">¡Gracias por tu compra!</h1>
+                <p class="confirmation-subtitle">
+                    Tu pedido ha sido procesado exitosamente. En breve recibirás un email de confirmación.
+                </p>
+                
+                <!-- Resumen del pedido -->
+                <div class="confirmation-details" id="order-details">
+                    <div class="detail-row">
+                        <span>Número de Pedido:</span>
+                        <strong id="order-number">Cargando...</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Fecha:</span>
+                        <strong id="order-date">Cargando...</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Total:</span>
+                        <strong id="order-total">Cargando...</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Método de Pago:</span>
+                        <strong id="payment-method">Cargando...</strong>
+                    </div>
+                    <div class="detail-row">
+                        <span>Estado:</span>
+                        <strong class="status pending" id="order-status">Pendiente</strong>
+                    </div>
+                </div>
+                
+                <!-- Información de envío -->
+                <div class="shipping-info">
+                    <h3><i class="fas fa-truck"></i> Información de Envío</h3>
+                    <div id="shipping-details">
+                        <p>Cargando información de envío...</p>
+                    </div>
+                </div>
+                
+                <!-- Productos del pedido -->
+                <div class="order-products">
+                    <h3><i class="fas fa-boxes"></i> Productos en tu pedido</h3>
+                    <div class="products-list" id="order-products">
+                        <div class="loading-products">
+                            <i class="fas fa-spinner fa-spin"></i> Cargando productos...
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Acciones -->
+                <div class="confirmation-actions">
+                    <a href="index.html" class="btn btn-primary">
+                        <i class="fas fa-home"></i> Volver al Inicio
+                    </a>
+                    <a href="#" class="btn btn-secondary" id="track-order">
+                        <i class="fas fa-map-marker-alt"></i> Seguir Pedido
+                    </a>
+                    <a href="#" class="btn btn-outline" id="print-order">
+                        <i class="fas fa-print"></i> Imprimir Confirmación
+                    </a>
+                </div>
+                
+                <!-- Información adicional -->
+                <div class="additional-info">
+                    <div class="info-card">
+                        <i class="fas fa-envelope"></i>
+                        <h4>Email de Confirmación</h4>
+                        <p>Hemos enviado un correo de confirmación a tu dirección de email.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-headset"></i>
+                        <h4>Soporte</h4>
+                        <p>¿Tienes preguntas? Contáctanos en <a href="mailto:soporte@fzstore.com">soporte@fzstore.com</a></p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-user-secret"></i>
+                        <h4>Discreción Garantizada</h4>
+                        <p>Tu pedido se enviará en embalaje discreto y seguro.</p>
+                    </div>
+                </div>
+
+                <!-- DEBUG: Mostrar localStorage -->
+                <div style="margin-top: 30px; padding: 20px; background: #2a2a2a; border: 1px solid #444; border-radius: 8px; color: #ccc; font-size: 12px; max-height: 300px; overflow-y: auto;">
+                    <strong>🐛 DEBUG localStorage:</strong>
+                    <div id="debug-storage" style="margin-top: 10px; font-family: monospace; white-space: pre-wrap; word-break: break-all;"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer (mismo que index.html) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="img/logo.png" alt="F&Z Store">
+                        <span class="logo-text">F&Z Store</span>
+                    </div>
+                    <p class="footer-text">
+                        Tu tienda de confianza para perfumería y productos íntimos. 
+                        Calidad, discreción y seguridad garantizada.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                        <li><a href="perfumeria.html"><i class="fas fa-chevron-right"></i> Perfumería</a></li>
+                        <li><a href="sexshop.html"><i class="fas fa-chevron-right"></i> Sex Shop</a></li>
+                        <li><a href="carrito.html"><i class="fas fa-chevron-right"></i> Carrito</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Mi Cuenta</h4>
+                    <ul class="footer-links">
+                        <li><a href="login.html"><i class="fas fa-chevron-right"></i> Iniciar Sesión</a></li>
+                        <li><a href="registro.html"><i class="fas fa-chevron-right"></i> Registrarse</a></li>
+                        <li><a href="#" id="footer-orders"><i class="fas fa-chevron-right"></i> Mis Pedidos</a></li>
+                        <li><a href="#" id="footer-profile"><i class="fas fa-chevron-right"></i> Mi Perfil</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Contacto</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-phone"></i> 7293 2253</li>
+                        <li><i class="fas fa-envelope"></i> info@fzstore.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> costa Rica, San Jose</li>
+                        <li><i class="fas fa-clock"></i> Lun-Vie: 9:00-18:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                
+                <div class="footer-links">
+          <a href="quienes-somos.html">Quiénes somos</a>
+          <a href="terminos.html">Términos y Condiciones</a>
+          <a href="privacidad.html">Política de Privacidad</a>
+          <a href="aviso-legal.html">Aviso Legal</a>
+        </div>
+
+<div class="copyright">
+                    <p>&copy; 2024 F&Z Store. Todos los derechos reservados.</p>
+                </div>
+              
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="js/helpers.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Script específico para confirmación -->
+    
+  <script src="js/confirmacion.js"></script>
+</body>
+</html>

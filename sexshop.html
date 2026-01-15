@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data: blob:; connect-src 'self' https:; frame-src 'self' https:; object-src 'none'; base-uri 'self';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+<title>Sex Shop - F&Z Store</title>
+    
+    
+    <link rel=\"icon\" type=\"image/png\" href=\"img/logo.png\" />
+<!-- CSS -->
+  <link rel="icon" type="image/png" href="img/logo.png" />
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/sexshop.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Meta específico para sexshop -->
+    <meta name="description" content="Sex Shop discreto con productos de calidad. Privacidad garantizada y envíos confidenciales.">
+    <meta name="keywords" content="sex shop, productos íntimos, juguetes sexuales, lubricantes, discreción">
+</head>
+<body class="sexshop-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="img/logo.png" alt="F&Z Store">
+                    <span class="logo-text">F&Z Store</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="perfumeria.html"><i class="fas fa-spray-can"></i> Perfumería</a></li>
+                    <li><a href="sexshop.html" class="active"><i class="fas fa-heart"></i> Sex Shop</a></li>
+                    <li><a href="carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                    
+                    <li class="user-menu-container">
+                        <div class="user-menu" id="user-menu">
+                            <span class="user-name" id="user-name">
+                                <i class="fas fa-user"></i> Iniciar Sesión
+                            </span>
+                            <div class="user-dropdown" id="user-dropdown">
+                                <a href="login.html" id="login-link"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+                                <a href="registro.html" id="register-link"><i class="fas fa-user-plus"></i> Registrarse</a>
+                                <a href="#" id="admin-link" style="display: none;"><i class="fas fa-cog"></i> Panel Admin</a>
+                                <a href="mis_pedidos.html" id="orders-link" style="display: none;"><i class="fas fa-box"></i> Mis Pedidos</a>
+                                <a href="#" id="logout-link" style="display: none;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="cart-icon" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                    
+                    <div class="cart-dropdown" id="cart-dropdown">
+                        <h4><i class="fas fa-shopping-bag"></i> Tu Carrito</h4>
+                        <div class="cart-items" id="cart-dropdown-items">
+                            <!-- Los productos se cargarán aquí -->
+                        </div>
+                        <div class="cart-total">
+                            <span>Total:</span>
+                            <span id="cart-dropdown-total">₡0.00</span>
+                        </div>
+                        <div class="cart-actions">
+                            <a href="carrito.html" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-eye"></i> Ver Carrito
+                            </a>
+                            <a href="finalizarcompra.html" class="btn btn-primary btn-sm">
+                                <i class="fas fa-credit-card"></i> Pagar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section Sex Shop -->
+    <section class="page-hero sexshop-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Sex Shop Discreto</h1>
+                <p class="hero-subtitle">
+                    Productos de calidad con privacidad garantizada. 
+                    Envíos confidenciales y atención profesional.
+                </p>
+                <div class="hero-features">
+                    <div class="feature">
+                        <i class="fas fa-user-secret"></i>
+                        <span>Discreción 100%</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-shipping-fast"></i>
+                        <span>Envío anónimo</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-lock"></i>
+                        <span>Compra segura</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-headset"></i>
+                        <span>Atención especializada</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advertencia de contenido sensible -->
+    <div class="sensitive-warning">
+        <div class="container">
+            <div class="warning-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>
+                    <strong>Contenido para adultos (+18):</strong> 
+                    Este sitio contiene productos para adultos. Debes tener 18 años o más para acceder.
+                    Al continuar, confirmas que eres mayor de edad.
+                </p>
+                <button class="warning-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categorías Sex Shop -->
+    <section class="sexshop-categories">
+        <div class="container">
+            <h2 class="section-title">Categorías</h2>
+            
+            <div class="categories-grid">
+                <div class="sexshop-category" data-subcat="juguetes">
+                    <div class="category-icon">
+                        <i class="fas fa-vibrator"></i>
+                    </div>
+                    <h3 class="category-name">Juguetes</h3>
+                    <p class="category-description">Vibradores, consoladores y más</p>
+                </div>
+                
+                <div class="sexshop-category" data-subcat="lubricantes">
+                    <div class="category-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3 class="category-name">Lubricantes</h3>
+                    <p class="category-description">A base de agua, silicona y más</p>
+                </div>
+                
+                <div class="sexshop-category" data-subcat="saludsexual">
+                    <div class="category-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3 class="category-name">Salud Sexual</h3>
+                    <p class="category-description">Cuidado y bienestar íntimo</p>
+                </div>
+                
+                <div class="sexshop-category" data-subcat="lenceria">
+                    <div class="category-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3 class="category-name">Lencería</h3>
+                    <p class="category-description">Ropa íntima y lencería sensual</p>
+                </div>
+                
+                <div class="sexshop-category" data-subcat="arosyanillos">
+                    <div class="category-icon">
+                        <i class="fas fa-ring"></i>
+                    </div>
+                    <h3 class="category-name">Aros y Anillos</h3>
+                    <p class="category-description">Anillos de prolongación y más</p>
+                </div>
+                
+                <div class="sexshop-category" data-subcat="juegoseroticos">
+                    <div class="category-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="category-name">Juegos Eróticos</h3>
+                    <p class="category-description">Dados, cartas y juegos de parejas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Productos Sex Shop -->
+    <section class="products-section sexshop-products">
+        <div class="container">
+            <div class="products-header">
+                <h2 class="products-title">Productos Destacados</h2>
+                <div class="products-filter">
+                    <select class="filter-select" id="sexshop-filter">
+                        <option value="all">Todos los productos</option>
+                        <option value="featured">Destacados</option>
+                        <option value="new">Nuevos</option>
+                        <option value="bestsellers">Más vendidos</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="products-grid" id="sexshop-products">
+                <!-- Los productos se cargarán dinámicamente -->
+                <div class="loading-products">
+                    <div class="loading-spinner"></div>
+                    <p>Cargando productos...</p>
+                </div>
+            </div>
+            
+            <!-- Información de privacidad -->
+            <div class="privacy-info">
+                <div class="privacy-card">
+                    <div class="privacy-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <div class="privacy-content">
+                        <h3>Tu privacidad es importante</h3>
+                        <p>
+                            Todos nuestros envíos son 100% discretos. No aparece el nombre de nuestra tienda 
+                            en el paquete ni en la factura. Tu información personal está protegida con 
+                            encriptación SSL de alta seguridad.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="privacy-card">
+                    <div class="privacy-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <div class="privacy-content">
+                        <h3>Envío confidencial</h3>
+                        <p>
+                            Los paquetes se envían en cajas genéricas sin logos ni indicaciones del contenido. 
+                            El remitente aparece como "FS Distribuciones" para garantizar tu privacidad.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Sex Shop -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Preguntas Frecuentes</h2>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        ¿Los envíos son realmente discretos?
+                    </h3>
+                    <p class="faq-answer">
+                        Sí, absolutamente. Todos nuestros paquetes se envían en cajas genéricas sin logos, 
+                        y en la factura no se especifica el contenido. El remitente aparece como una empresa 
+                        genérica de distribución.
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        ¿Qué métodos de pago aceptan?
+                    </h3>
+                    <p class="faq-answer">
+                        Aceptamos tarjetas de crédito/débito, PayPal y transferencias bancarias. 
+                        Todos los pagos son procesados de forma segura con encriptación SSL.
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        ¿Puedo devolver un producto?
+                    </h3>
+                    <p class="faq-answer">
+                        Por motivos de higiene, no aceptamos devoluciones de productos íntimos. 
+                        Sin embargo, si recibes un producto defectuoso, contáctanos dentro de las 
+                        48 horas y lo resolveremos.
+                    </p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        ¿Ofrecen asesoramiento?
+                    </h3>
+                    <p class="faq-answer">
+                        Sí, nuestro equipo está capacitado para ofrecer asesoramiento discreto y profesional. 
+                        Puedes contactarnos por chat, email o teléfono.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="img/logo.png" alt="F&Z Store">
+                        <span class="logo-text">F&Z Store</span>
+                    </div>
+                    <p class="footer-text">
+                        Tu tienda de confianza para perfumería y productos íntimos. 
+                        Calidad, discreción y seguridad garantizada.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                        <li><a href="perfumeria.html"><i class="fas fa-chevron-right"></i> Perfumería</a></li>
+                        <li><a href="sexshop.html"><i class="fas fa-chevron-right"></i> Sex Shop</a></li>
+                        <li><a href="carrito.html"><i class="fas fa-chevron-right"></i> Carrito</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Mi Cuenta</h4>
+                    <ul class="footer-links">
+                        <li><a href="login.html"><i class="fas fa-chevron-right"></i> Iniciar Sesión</a></li>
+                        <li><a href="registro.html"><i class="fas fa-chevron-right"></i> Registrarse</a></li>
+                        <li><a href="#" id="footer-orders"><i class="fas fa-chevron-right"></i> Mis Pedidos</a></li>
+                        <li><a href="#" id="footer-profile"><i class="fas fa-chevron-right"></i> Mi Perfil</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Contacto</h4>
+                    <ul class="footer-contact">
+                      <li><i class="fas fa-phone"></i> +506 7293 2253</li>
+                        <li><i class="fas fa-envelope"></i> info@fzstore.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Costa Rica, Sanjose</li>
+                        <li><i class="fas fa-clock"></i> Lun-Vie: 9:00-18:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                
+                <div class="footer-links">
+          <a href="quienes-somos.html">Quiénes somos</a>
+          <a href="terminos.html">Términos y Condiciones</a>
+          <a href="privacidad.html">Política de Privacidad</a>
+          <a href="aviso-legal.html">Aviso Legal</a>
+        </div>
+
+<div class="copyright">
+                    <p>&copy; 2026 F&Z Store. Todos los derechos reservados.</p>
+                   
+            </div>
+        </div>
+    </footer>
+
+    <!-- Age Verification Modal -->
+    <div class="age-verification" id="age-verification">
+        <div class="verification-content">
+            <div class="verification-icon">
+                <i class="fas fa-user-secret"></i>
+            </div>
+            <h2 class="verification-title">Verificación de Edad</h2>
+            <p class="verification-text">
+                Este sitio contiene productos para adultos. Debes tener 18 años o más para acceder.
+                Al hacer clic en "Soy mayor de 18", confirmas que tienes la edad legal requerida.
+            </p>
+            <div class="verification-actions">
+                <button class="btn btn-primary" id="confirm-age">
+                    <i class="fas fa-check"></i> Soy mayor de 18 años
+                </button>
+                <a href="index.html" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Salir del sitio
+                </a>
+            </div>
+            <p class="verification-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                El acceso a menores de edad está estrictamente prohibido.
+            </p>
+        </div>
+    </div>
+
+    <!-- Scripts con defer para no bloquear parsing -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js" defer></script>
+    
+    <script src="js/helpers.js" defer></script>
+    <script src="js/performance-config.js" defer></script>
+    <script src="js/firebase-config.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/carrito.js" defer></script>
+    <script src="js/productos.js" defer></script>
+    <script src="js/app.js" defer></script>
+    
+    <!-- Script específico para sexshop -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificación de edad
+            const ageVerification = document.getElementById('age-verification');
+            const confirmAgeBtn = document.getElementById('confirm-age');
+            
+            // Verificar si ya confirmó la edad
+            const ageConfirmed = localStorage.getItem('ageConfirmed');
+            
+            if (!ageConfirmed && ageVerification) {
+                ageVerification.style.display = 'flex';
+            }
+            
+            if (confirmAgeBtn) {
+                confirmAgeBtn.addEventListener('click', function() {
+                    localStorage.setItem('ageConfirmed', 'true');
+                    if (ageVerification) {
+                        ageVerification.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Cerrar advertencia sensible
+            const warningClose = document.querySelector('.warning-close');
+            if (warningClose) {
+                warningClose.addEventListener('click', function() {
+                    this.closest('.sensitive-warning').style.display = 'none';
+                });
+            }
+            
+            // Cargar productos sexshop
+            if (typeof productos !== 'undefined') {
+                productos.cargarProductosPorCategoria('sexshop');
+            }
+            
+            // Filtro de productos
+            const sexshopFilter = document.getElementById('sexshop-filter');
+            if (sexshopFilter) {
+                sexshopFilter.addEventListener('change', function() {
+                    if (typeof productos !== 'undefined') {
+                        productos.aplicarFiltroSexshop(this.value);
+                    }
+                });
+            }
+            
+            // Menú móvil se inicializa globalmente en js/app.js
+            
+            // Estilos específicos para sexshop
+            const style = document.createElement('style');
+            style.textContent = `
+                .age-verification {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, 0.9);
+                    display: none;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 99999;
+                }
+                
+                .verification-content {
+                    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+                    padding: 40px;
+                    border-radius: var(--border-radius);
+                    max-width: 500px;
+                    width: 90%;
+                    text-align: center;
+                }
+                
+                .verification-icon {
+                    font-size: 4rem;
+                    margin-bottom: 20px;
+                    color: white;
+                }
+                
+                .verification-title {
+                    color: white;
+                    margin-bottom: 15px;
+                }
+                
+                .verification-text {
+                    color: rgba(255, 255, 255, 0.9);
+                    margin-bottom: 30px;
+                }
+                
+                .verification-actions {
+                    display: flex;
+                    gap: 15px;
+                    margin-bottom: 20px;
+                }
+                
+                .verification-warning {
+                    color: rgba(255, 255, 255, 0.7);
+                    font-size: 0.9rem;
+                }
+                
+                .sensitive-warning {
+                    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+                    color: white;
+                    padding: 15px 0;
+                }
+                
+                .warning-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                }
+                
+                .warning-close {
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 1.2rem;
+                    cursor: pointer;
+                    margin-left: auto;
+                }
+                
+                .sexshop-categories {
+                    padding: 60px 0;
+                    background: var(--color-bg-secondary);
+                }
+                
+                .sexshop-category {
+                    background: var(--color-bg-card);
+                    padding: 30px;
+                    border-radius: var(--border-radius);
+                    text-align: center;
+                    transition: transform 0.3s ease;
+                }
+                
+                .sexshop-category:hover {
+                    transform: translateY(-10px);
+                    border: 2px solid var(--color-primary);
+                }
+                
+                .category-icon {
+                    font-size: 2.5rem;
+                    color: var(--color-primary);
+                    margin-bottom: 15px;
+                }
+                
+                .faq-section {
+                    padding: 60px 0;
+                    background: var(--color-bg-secondary);
+                }
+                
+                .faq-item {
+                    background: var(--color-bg-card);
+                    padding: 25px;
+                    border-radius: var(--border-radius);
+                    margin-bottom: 20px;
+                }
+                
+                .faq-question {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 15px;
+                    color: var(--color-primary-light);
+                }
+                
+                .age-warning {
+                    color: var(--color-warning);
+                    font-size: 0.9rem;
+                    margin-top: 10px;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

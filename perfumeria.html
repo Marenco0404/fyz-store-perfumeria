@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data: blob:; connect-src 'self' https:; frame-src 'self' https:; object-src 'none'; base-uri 'self';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+<title>Perfumería - F&Z Store</title>
+    
+    
+    <link rel=\"icon\" type=\"image/png\" href=\"img/logo.png\" />
+<!-- CSS -->
+  <link rel="icon" type="image/png" href="img/logo.png" />
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/perfumeria.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="perfumeria-page">
+    <!-- Header (mismo que index.html) -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="img/logo.png" alt="F&Z Store">
+                    <span class="logo-text">F&Z Store</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="perfumeria.html" class="active"><i class="fas fa-spray-can"></i> Perfumería</a></li>
+                    <li><a href="sexshop.html"><i class="fas fa-heart"></i> Sex Shop</a></li>
+                    <li><a href="carrito.html"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                    
+                    <li class="user-menu-container">
+                        <div class="user-menu" id="user-menu">
+                            <span class="user-name" id="user-name">
+                                <i class="fas fa-user"></i> Iniciar Sesión
+                            </span>
+                            <div class="user-dropdown" id="user-dropdown">
+                                <a href="login.html" id="login-link"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+                                <a href="registro.html" id="register-link"><i class="fas fa-user-plus"></i> Registrarse</a>
+                                <a href="#" id="admin-link" style="display: none;"><i class="fas fa-cog"></i> Panel Admin</a>
+                                <a href="mis_pedidos.html" id="orders-link" style="display: none;"><i class="fas fa-box"></i> Mis Pedidos</a>
+                                <a href="#" id="logout-link" style="display: none;"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="cart-icon" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                    
+                    <div class="cart-dropdown" id="cart-dropdown">
+                        <h4><i class="fas fa-shopping-bag"></i> Tu Carrito</h4>
+                        <div class="cart-items" id="cart-dropdown-items">
+                            <!-- Los productos se cargarán aquí -->
+                        </div>
+                        <div class="cart-total">
+                            <span>Total:</span>
+                            <span id="cart-dropdown-total">₡0.00</span>
+                        </div>
+                        <div class="cart-actions">
+                            <a href="carrito.html" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-eye"></i> Ver Carrito
+                            </a>
+                            <a href="finalizarcompra.html" class="btn btn-primary btn-sm">
+                                <i class="fas fa-credit-card"></i> Pagar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section Perfumería -->
+    <section class="page-hero perfumeria-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Perfumería Exclusiva</h1>
+                <p class="hero-subtitle">
+                    Descubre nuestra colección de fragancias únicas para hombre y mujer. 
+                    Calidad premium y aromas inolvidables.
+                </p>
+                <div class="hero-badges">
+                    <span class="badge"><i class="fas fa-check"></i> Originales 100%</span>
+                    <span class="badge"><i class="fas fa-shipping-fast"></i> Envío rápido</span>
+                    <span class="badge"><i class="fas fa-lock"></i> Compra segura</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filtros -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-header">
+                <h2 class="filters-title">Filtrar Productos</h2>
+                <div class="filters-count" id="products-count">
+                    Mostrando <span id="count-number">0</span> productos
+                </div>
+            </div>
+            
+            <div class="filters-grid">
+                <!-- Categorías -->
+                <div class="filter-group">
+                    <h3 class="filter-title"><i class="fas fa-tags"></i> Categorías</h3>
+                    <div class="filter-options" id="category-filters">
+                        <button class="filter-btn active" data-filter="all">Todas</button>
+                        <!-- Las categorías se cargarán dinámicamente -->
+                    </div>
+                </div>
+                
+                <!-- Precio -->
+                <div class="filter-group">
+                    <h3 class="filter-title"><i class="fas fa-dollar-sign"></i> Rango de Precio</h3>
+                    <div class="price-filter">
+                        <input type="range" id="price-range" min="0" max="500" step="10" value="500">
+                        <div class="price-labels">
+                            <span>₡0</span>
+                            <span id="price-max">₡500+</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ordenar -->
+                <div class="filter-group">
+                    <h3 class="filter-title"><i class="fas fa-sort"></i> Ordenar por</h3>
+                    <select class="sort-select" id="sort-select">
+                        <option value="default">Predeterminado</option>
+                        <option value="price-asc">Precio: Menor a Mayor</option>
+                        <option value="price-desc">Precio: Mayor a Menor</option>
+                        <option value="name-asc">Nombre: A-Z</option>
+                        <option value="name-desc">Nombre: Z-A</option>
+                        <option value="newest">Más Nuevos</option>
+                        <option value="featured">Destacados</option>
+                    </select>
+                </div>
+                
+                <!-- Buscar -->
+                <div class="filter-group">
+                    <h3 class="filter-title"><i class="fas fa-search"></i> Buscar</h3>
+                    <div class="search-filter">
+                        <input type="text" id="product-search" placeholder="Buscar productos...">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Productos -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-header">
+                <h2 class="products-title">Nuestra Colección</h2>
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="products-container grid-view" id="products-container">
+                <!-- Los productos se cargarán dinámicamente -->
+                <div class="loading-products">
+                    <div class="loading-spinner"></div>
+                    <p>Cargando productos...</p>
+                </div>
+            </div>
+            
+            <!-- Paginación -->
+            <div class="pagination" id="pagination">
+                <button class="page-btn prev" disabled>
+                    <i class="fas fa-chevron-left"></i> Anterior
+                </button>
+                <div class="page-numbers" id="page-numbers">
+                    <span class="page-number active">1</span>
+                </div>
+                <button class="page-btn next">
+                    Siguiente <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (mismo que index.html) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="img/logo.png" alt="F&Z Store">
+                        <span class="logo-text">F&Z Store</span>
+                    </div>
+                    <p class="footer-text">
+                        Tu tienda de confianza para perfumería y productos íntimos. 
+                        Calidad, discreción y seguridad garantizada.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                        <li><a href="perfumeria.html"><i class="fas fa-chevron-right"></i> Perfumería</a></li>
+                        <li><a href="sexshop.html"><i class="fas fa-chevron-right"></i> Sex Shop</a></li>
+                        <li><a href="carrito.html"><i class="fas fa-chevron-right"></i> Carrito</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Mi Cuenta</h4>
+                    <ul class="footer-links">
+                        <li><a href="login.html"><i class="fas fa-chevron-right"></i> Iniciar Sesión</a></li>
+                        <li><a href="registro.html"><i class="fas fa-chevron-right"></i> Registrarse</a></li>
+                        <li><a href="#" id="footer-orders"><i class="fas fa-chevron-right"></i> Mis Pedidos</a></li>
+                        <li><a href="#" id="footer-profile"><i class="fas fa-chevron-right"></i> Mi Perfil</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Contacto</h4>
+                    <ul class="footer-contact">
+                       <li><i class="fas fa-phone"></i> +506 7293 2253</li>
+                        <li><i class="fas fa-envelope"></i> info@fzstore.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Costa Rica, Sanjose</li>
+                        <li><i class="fas fa-clock"></i> Lun-Vie: 9:00-18:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                
+                <div class="footer-links">
+          <a href="quienes-somos.html">Quiénes somos</a>
+          <a href="terminos.html">Términos y Condiciones</a>
+          <a href="privacidad.html">Política de Privacidad</a>
+          <a href="aviso-legal.html">Aviso Legal</a>
+        </div>
+
+<div class="copyright">
+                    <p>&copy; 2026 F&Z Store. Todos los derechos reservados.</p>
+                </div>
+              
+        </div>
+    </footer>
+
+    <!-- Scripts con defer para no bloquear parsing -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js" defer></script>
+    
+    <script src="js/helpers.js" defer></script>
+    <script src="js/performance-config.js" defer></script>
+    <script src="js/firebase-config.js" defer></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/carrito.js" defer></script>
+    <script src="js/productos.js" defer></script>
+    <script src="js/app.js" defer></script>
+    
+    <!-- Script específico para perfumería -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar sistema de productos
+            if (typeof productos !== 'undefined') {
+                productos.cargarProductosPorCategoria('perfumeria');
+            }
+            
+            // Configurar filtros
+            const categoryFilters = document.getElementById('category-filters');
+            const priceRange = document.getElementById('price-range');
+            const sortSelect = document.getElementById('sort-select');
+            const productSearch = document.getElementById('product-search');
+            const viewBtns = document.querySelectorAll('.view-btn');
+            
+            // Cargar categorías dinámicamente
+            async function cargarCategorias() {
+                try {
+                    const categoriasSnapshot = await db.collection('categorias')
+                        .where('estado', '==', 'active')
+                        .where('slug', '==', 'perfumeria')
+                        .get();
+                    
+                    categoriasSnapshot.forEach(doc => {
+                        const categoria = doc.data();
+                        const btn = document.createElement('button');
+                        btn.className = 'filter-btn';
+                        btn.dataset.filter = doc.id;
+                        btn.textContent = categoria.nombre;
+                        categoryFilters.appendChild(btn);
+                    });
+                    
+                    // Event listeners para filtros
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                            this.classList.add('active');
+                            aplicarFiltros();
+                        });
+                    });
+                    
+                } catch (error) {
+                    console.error('Error cargando categorías:', error);
+                }
+            }
+            
+            // Aplicar filtros
+            function aplicarFiltros() {
+                const filtros = {
+                    categoria: document.querySelector('.filter-btn.active').dataset.filter,
+                    precioMax: parseInt(priceRange.value),
+                    orden: sortSelect.value,
+                    busqueda: productSearch.value.trim()
+                };
+                
+                if (typeof productos !== 'undefined') {
+                    productos.aplicarFiltros(filtros);
+                }
+            }
+            
+            // Event listeners
+            if (priceRange) {
+                priceRange.addEventListener('input', function() {
+                    // Mostrar en colones (solo UI; no afecta la lógica del filtro)
+                    document.getElementById('price-max').textContent = `${formatCRC(Number(this.value || 0))}+`;
+                });
+                
+                priceRange.addEventListener('change', aplicarFiltros);
+            }
+            
+            if (sortSelect) {
+                sortSelect.addEventListener('change', aplicarFiltros);
+            }
+            
+            if (productSearch) {
+                productSearch.addEventListener('input', aplicarFiltros);
+            }
+            
+            // Cambiar vista
+            viewBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    viewBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const view = this.dataset.view;
+                    const container = document.getElementById('products-container');
+                    
+                    if (container) {
+                        container.classList.remove('grid-view', 'list-view');
+                        container.classList.add(`${view}-view`);
+                    }
+                });
+            });
+            
+            // Cargar categorías
+            cargarCategorias();
+            
+            // Menú móvil se inicializa globalmente en js/app.js
+        });
+    </script>
+</body>
+</html>

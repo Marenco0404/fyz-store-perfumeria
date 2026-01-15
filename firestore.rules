@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return signedIn() &&
+        exists(/databases/$(database)/documents/usuarios/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol in ['admin', 'superadmin'];
+    }
+
+    // Public catalog (read-only)
+    match /productos/{id} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /categorias/{id} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /subcategorias/{id} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Users
+    match /usuarios/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Orders
+    match /pedidos/{pedidoId} {
+      allow read: if signedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+
+      // Create: user can create ONLY their own order.
+      // We keep this flexible so serverTimestamp and extra fields won't break.
+      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+
+      // Update/Delete: admins only (prevents users faking status/amount)
+      allow update, delete: if isAdmin();
+    }
+  }
+}
