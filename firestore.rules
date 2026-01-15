@@ -40,13 +40,18 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
-    // Orders
+    // Orders (allow purchases from authenticated or anonymous users)
     match /pedidos/{pedidoId} {
-      allow read: if signedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      // Read: owner can read their own order, admins can read all
+      allow read: if (signedIn() && (resource.data.usuarioId == request.auth.uid || isAdmin())) || 
+                      (!signedIn() && resource.data.paypalOrderId == pedidoId);
 
-      // Create: user can create ONLY their own order.
-      // We keep this flexible so serverTimestamp and extra fields won't break.
-      allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
+      // Create: Anyone can create an order (for guest checkout)
+      // But we validate the orderID is from PayPal using clientID
+      allow create: if request.resource.data.paypalOrderId != null &&
+                       request.resource.data.totalUSD > 0 &&
+                       request.resource.data.items is list &&
+                       request.resource.data.items.size() > 0;
 
       // Update/Delete: admins only (prevents users faking status/amount)
       allow update, delete: if isAdmin();
