@@ -116,10 +116,17 @@
         </div>
 
         <div class="test-section">
+            <h2>Pruebas de Datos Guardados</h2>
+            <div id="storage-tests"></div>
+        </div>
+
+        <div class="test-section">
             <h2>Acciones</h2>
             <button onclick="addTestProduct()">Agregar Producto Test</button>
+            <button onclick="saveTestShipping()">Guardar Envío Test</button>
             <button onclick="goToCheckout()">Ir a Checkout</button>
             <button onclick="clearCart()">Limpiar Carrito</button>
+            <button onclick="clearStorage()">Limpiar Storage</button>
             <button onclick="clearConsole()">Limpiar Consola</button>
         </div>
 
@@ -265,6 +272,53 @@
                 cartTests.appendChild(div);
             }
 
+            // Storage Tests
+            const storageTests = document.getElementById('storage-tests');
+            storageTests.innerHTML = '';
+
+            try {
+                const shipping = localStorage.getItem('fyz_checkout_shipping');
+                const shippingData = shipping ? JSON.parse(shipping) : null;
+                
+                const storageData = [
+                    {
+                        name: 'localStorage disponible',
+                        pass: typeof localStorage !== 'undefined',
+                        details: '✅ Disponible'
+                    },
+                    {
+                        name: 'Datos de envío guardados',
+                        pass: !!shippingData,
+                        details: shippingData ? `✅ ${shippingData.firstName || 'Sin nombre'}` : '❌ No hay datos'
+                    }
+                ];
+
+                if (shippingData) {
+                    storageData.push({
+                        name: 'Email guardado',
+                        pass: !!shippingData.email,
+                        details: shippingData.email || '❌ Sin email'
+                    });
+                    storageData.push({
+                        name: 'Teléfono guardado',
+                        pass: !!shippingData.phone,
+                        details: shippingData.phone || '❌ Sin teléfono'
+                    });
+                }
+
+                storageData.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = `test-item ${item.pass ? 'pass' : 'warn'}`;
+                    div.textContent = `${item.pass ? '✅' : '⚠️'} ${item.name}: ${item.details}`;
+                    storageTests.appendChild(div);
+                });
+            } catch (err) {
+                const div = document.createElement('div');
+                div.className = 'test-item fail';
+                div.textContent = `❌ Error leyendo localStorage: ${err.message}`;
+                storageTests.appendChild(div);
+            }
+
             console.log('✅ Pruebas completadas');
         }
 
@@ -292,6 +346,35 @@
             localStorage.removeItem('fyz_carrito');
             console.log('🧹 Carrito limpiado');
             runTests();
+        }
+
+        function clearStorage() {
+            localStorage.removeItem('fyz_checkout_shipping');
+            localStorage.removeItem('fyz_carrito');
+            localStorage.removeItem('fyz_checkout_step');
+            console.log('🧹 Todo el localStorage limpiado');
+            runTests();
+        }
+
+        function saveTestShipping() {
+            const testShipping = {
+                firstName: 'Juan',
+                lastName: 'Pérez',
+                email: 'juan@example.com',
+                phone: '+506 8123 4567',
+                address: 'Calle 1, Casa 123',
+                city: 'San José',
+                postal: '10101',
+                country: 'CR'
+            };
+            
+            try {
+                localStorage.setItem('fyz_checkout_shipping', JSON.stringify(testShipping));
+                console.log('✅ Datos de envío guardados:', testShipping);
+                runTests();
+            } catch (err) {
+                console.error('❌ Error guardando datos de envío:', err);
+            }
         }
 
         function goToCheckout() {

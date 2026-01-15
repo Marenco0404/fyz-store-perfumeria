@@ -132,17 +132,48 @@
     },
 
     /**
-     * Pre-rellenar formulario si está autenticado
+     * Pre-rellenar formulario si está autenticado o tiene datos guardados
      */
     prefillForm() {
+      console.log("📝 Pre-rellenando formulario...");
+      
+      // Intentar cargar datos guardados previamente
+      try {
+        const savedShipping = localStorage.getItem("fyz_checkout_shipping");
+        if (savedShipping) {
+          const shipping = JSON.parse(savedShipping);
+          console.log("✅ Datos de envío encontrados en localStorage:", shipping);
+          
+          document.getElementById("shipping-first-name").value = shipping.firstName || "";
+          document.getElementById("shipping-last-name").value = shipping.lastName || "";
+          document.getElementById("shipping-email").value = shipping.email || "";
+          document.getElementById("shipping-phone").value = shipping.phone || "";
+          document.getElementById("shipping-address").value = shipping.address || "";
+          document.getElementById("shipping-city").value = shipping.city || "";
+          document.getElementById("shipping-postal").value = shipping.postal || "";
+          document.getElementById("shipping-country").value = shipping.country || "CR";
+          
+          return; // No continuar con Firebase si ya tenemos datos guardados
+        }
+      } catch (err) {
+        console.warn("⚠️ Error cargando datos guardados:", err);
+      }
+
+      // Si no hay datos guardados, intentar usar datos de Firebase (si está autenticado)
       if (typeof window.auth === "undefined") return;
 
       const user = window.auth.currentUser;
-      if (!user) return;
+      if (!user) {
+        console.log("ℹ️ No hay usuario autenticado");
+        return;
+      }
+
+      console.log("👤 Usuario autenticado:", user.email);
 
       const email = document.getElementById("shipping-email");
       if (email && !email.value) {
         email.value = user.email || "";
+        console.log("✅ Email pre-rellenado desde Firebase");
       }
     },
 
@@ -186,11 +217,14 @@
      * Validar y ir a pago
      */
     goToPayment() {
+      console.log("📋 Validando formulario de envío...");
+      
       // Validar formulario
       const form = document.getElementById("shipping-form");
       if (!form || !form.checkValidity()) {
         form?.reportValidity?.();
         this.showError("❌ Por favor, completa todos los campos requeridos.");
+        console.error("❌ Formulario inválido");
         return;
       }
 
@@ -200,39 +234,59 @@
 
       if (!this.isValidEmail(email)) {
         this.showError("❌ Email no válido.");
+        console.error("❌ Email inválido:", email);
         return;
       }
 
       if (!this.isValidPhone(phone)) {
         this.showError("❌ Teléfono debe tener al menos 8 dígitos.");
+        console.error("❌ Teléfono inválido:", phone);
         return;
       }
 
       // Guardar datos de envío
-      const shipping = {
-        firstName: document.getElementById("shipping-first-name")?.value || "",
-        lastName: document.getElementById("shipping-last-name")?.value || "",
-        email,
-        phone,
-        address: document.getElementById("shipping-address")?.value || "",
-        city: document.getElementById("shipping-city")?.value || "",
-        postal: document.getElementById("shipping-postal")?.value || "",
-        country: document.getElementById("shipping-country")?.value || "CR"
-      };
-      localStorage.setItem("fyz_checkout_shipping", JSON.stringify(shipping));
+      try {
+        const shipping = {
+          firstName: document.getElementById("shipping-first-name")?.value || "",
+          lastName: document.getElementById("shipping-last-name")?.value || "",
+          email,
+          phone,
+          address: document.getElementById("shipping-address")?.value || "",
+          city: document.getElementById("shipping-city")?.value || "",
+          postal: document.getElementById("shipping-postal")?.value || "",
+          country: document.getElementById("shipping-country")?.value || "CR"
+        };
+        
+        console.log("💾 Guardando datos de envío:", shipping);
+        localStorage.setItem("fyz_checkout_shipping", JSON.stringify(shipping));
+        
+        // Verificar que se guardó correctamente
+        const saved = localStorage.getItem("fyz_checkout_shipping");
+        if (saved) {
+          console.log("✅ Datos guardados correctamente en localStorage");
+        } else {
+          console.error("❌ Error: Los datos no se guardaron en localStorage");
+          this.showError("❌ Error al guardar los datos. Intenta nuevamente.");
+          return;
+        }
 
-      // Ir a pago
-      const shippingSection = document.getElementById("shipping-section");
-      const paymentSection = document.getElementById("payment-section");
+        // Ir a pago
+        const shippingSection = document.getElementById("shipping-section");
+        const paymentSection = document.getElementById("payment-section");
 
-      if (shippingSection) shippingSection.style.display = "none";
-      if (paymentSection) paymentSection.style.display = "block";
+        if (shippingSection) shippingSection.style.display = "none";
+        if (paymentSection) paymentSection.style.display = "block";
 
-      // Actualizar steps
-      this.updateSteps(2);
-      this.showSuccess("✅ Información de envío guardada. Selecciona tu método de pago.");
+        // Actualizar steps
+        this.updateSteps(2);
+        this.showSuccess("✅ Información de envío guardada. Selecciona tu método de pago.");
+        console.log("✅ Progreso actualizado al paso 2");
 
-      window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (err) {
+        console.error("❌ Error en goToPayment:", err);
+        this.showError(`❌ Error: ${err.message}`);
+      }
     },
 
     /**
@@ -313,7 +367,9 @@
      */
     isValidPhone(phone) {
       const digits = phone.replace(/\D/g, "");
-      return digits.length >= 8;
+      const isValid = digits.length >= 8;
+      console.log(`📞 Validando teléfono: "${phone}" → ${digits.length} dígitos → ${isValid ? '✅' : '❌'}`);
+      return isValid;
     },
 
     /**
