@@ -286,10 +286,17 @@
       this.currentStep = step;
       const steps = document.querySelectorAll(".progress-step");
       steps.forEach((el, idx) => {
-        if (idx < step) {
+        const stepNum = idx + 1; // Convertir a 1-based
+        if (stepNum <= step) {
           el.classList.add("active");
+          if (stepNum < step) {
+            el.classList.add("completed");
+          } else {
+            el.classList.remove("completed");
+          }
         } else {
           el.classList.remove("active");
+          el.classList.remove("completed");
         }
       });
     },
