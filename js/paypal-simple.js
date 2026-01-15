@@ -292,8 +292,8 @@
     async savePedido({ orderId, totalCRC, totalUSD, items }) {
       try {
         if (typeof window.db === "undefined" || !window.db) {
-          log("warn", "Firestore no disponible");
-          return orderId;
+          log("warn", "Firestore no disponible, usando fallback local");
+          return this.savePedidoLocal({ orderId, totalCRC, totalUSD, items });
         }
 
         const user = window.auth?.currentUser || null;
@@ -301,7 +301,7 @@
           paypalOrderId: orderId,
           usuarioId: user?.uid || null,
           email: user?.email || null,
-          estado: "solicitando_envio", // estados: solicitando_envio -> envio_hecho -> completado
+          estado: "solicitando_envio",
           totalCRC: Number(totalCRC) || 0,
           totalUSD: Number(totalUSD) || 0,
           items: Array.isArray(items) ? items : [],
@@ -309,46 +309,63 @@
           shipping: JSON.parse(localStorage.getItem("fyz_checkout_shipping") || "{}")
         };
 
-        // ✅ Guardar con ID = PayPal orderId para que confirmacion.html pueda cargarlo directo
-        await window.db.collection("pedidos").doc(orderId).set(pedido, { merge: true });
-        log("success", "Pedido guardado con ID PayPal:", orderId);
+        log("info", "Intentando guardar pedido en Firestore...");
+        
+        // Intentar guardar con timeout
+        const savePromise = window.db.collection("pedidos").doc(orderId).set(pedido, { merge: true });
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error("Timeout guardando en Firestore")), 5000)
+        );
+
+        await Promise.race([savePromise, timeoutPromise]);
+        log("success", "Pedido guardado en Firestore:", orderId);
 
         // Limpiar carrito
         localStorage.removeItem("fyz_carrito");
         localStorage.removeItem("fyz_checkout_step");
 
-        // Guardar fallback local por si reglas/latencia fallan en confirmación
-        try {
-          localStorage.setItem("fyz_confirmacion_pago", JSON.stringify({
-            orderId,
-            pedidoId: orderId,
-            totalCRC: pedido.totalCRC,
-            totalUSD: pedido.totalUSD,
-            items: pedido.items,
-            fecha: pedido.fecha,
-            shipping: pedido.shipping
-          }));
-        } catch {}
+        // Guardar fallback local también
+        this.savePedidoLocal({ orderId, totalCRC, totalUSD, items });
 
         return orderId;
       } catch (err) {
-        log("error", "Error guardando pedido (Firestore)", err);
+        log("error", "Error guardando en Firestore", err);
+        console.error("❌ Error Firestore:", err.message);
+        
+        // Fallback: guardar localmente si Firestore falla
+        return this.savePedidoLocal({ orderId, totalCRC, totalUSD, items });
+      }
+    },
 
-        // Fallback: guardar confirmación local para que la confirmación no quede en blanco
-        try {
-          localStorage.setItem("fyz_confirmacion_pago", JSON.stringify({
-            orderId,
-            pedidoId: orderId,
-            totalCRC: Number(totalCRC) || 0,
-            totalUSD: Number(totalUSD) || 0,
-            items: Array.isArray(items) ? items : [],
-            fecha: new Date().toISOString(),
-            shipping: JSON.parse(localStorage.getItem("fyz_checkout_shipping") || "{}"),
-            error: String(err?.message || err)
-          }));
-        } catch {}
+    /**
+     * Guardar pedido en localStorage como fallback
+     */
+    savePedidoLocal({ orderId, totalCRC, totalUSD, items }) {
+      try {
+        log("info", "Guardando pedido en localStorage como fallback...");
+        
+        const pedido = {
+          paypalOrderId: orderId,
+          totalCRC: Number(totalCRC) || 0,
+          totalUSD: Number(totalUSD) || 0,
+          items: Array.isArray(items) ? items : [],
+          fecha: new Date().toISOString(),
+          shipping: JSON.parse(localStorage.getItem("fyz_checkout_shipping") || "{}"),
+          fuente: "localStorage_fallback"
+        };
 
+        localStorage.setItem("fyz_confirmacion_pago", JSON.stringify(pedido));
+        localStorage.setItem(`fyz_pedido_${orderId}`, JSON.stringify(pedido));
+        
+        // Limpiar carrito
+        localStorage.removeItem("fyz_carrito");
+        localStorage.removeItem("fyz_checkout_step");
+        
+        log("success", "Pedido guardado localmente:", orderId);
         return orderId;
+      } catch (err) {
+        log("error", "Error guardando en localStorage", err);
+        return orderId; // Retornar el orderId de todas formas para continuar
       }
     },
 

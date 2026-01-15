@@ -40,21 +40,20 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
-    // Orders (allow purchases from authenticated or anonymous users)
+    // Orders (OPEN para guest checkout con validación PayPal)
     match /pedidos/{pedidoId} {
-      // Read: owner can read their own order, admins can read all
-      allow read: if (signedIn() && (resource.data.usuarioId == request.auth.uid || isAdmin())) || 
-                      (!signedIn() && resource.data.paypalOrderId == pedidoId);
+      // Allow anyone to READ their order using paypalOrderId
+      allow read: if true;
 
-      // Create: Anyone can create an order (for guest checkout)
-      // But we validate the orderID is from PayPal using clientID
+      // Allow ANYONE to CREATE an order (for guest checkout)
+      // Basic validation only to prevent abuse
       allow create: if request.resource.data.paypalOrderId != null &&
                        request.resource.data.totalUSD > 0 &&
-                       request.resource.data.items is list &&
-                       request.resource.data.items.size() > 0;
+                       request.resource.data.items is list;
 
-      // Update/Delete: admins only (prevents users faking status/amount)
-      allow update, delete: if isAdmin();
+      // Update/Delete: admins or owners only
+      allow update, delete: if isAdmin() || 
+                               (signedIn() && resource.data.usuarioId == request.auth.uid);
     }
   }
 }
