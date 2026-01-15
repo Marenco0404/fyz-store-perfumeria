@@ -170,6 +170,9 @@
         return false;
       }
 
+      // Limpiar contenedor
+      container.innerHTML = "";
+
       // Validar carrito
       const items = util.getCart();
       if (!items.length) {
@@ -199,7 +202,8 @@
 
         log("info", `Monto: ${util.getCRC(totalCRC)} (${util.getUSD(totalUSD)})`);
 
-        window.paypal.Buttons({
+        // Crear botones
+        const buttonsInstance = window.paypal.Buttons({
           locale: "es_ES",
           style: {
             layout: "vertical",
@@ -244,31 +248,36 @@
             } catch (err) {
               log("error", "Error capturando orden", err);
               this.showError(`Error: ${err.message}`);
+              this.rendering = false;
             }
           },
 
           onError: (err) => {
             log("error", "Error PayPal", err);
             this.showError(`<strong>⚠️ Error con PayPal</strong><br><small>Intenta desactivar AdBlock o usa otro navegador</small>`);
+            this.rendering = false;
           },
 
           onCancel: () => {
             log("warning", "Usuario canceló");
             this.showWarning("Cancelaste el pago. Puedes intentar nuevamente.");
+            this.rendering = false;
           }
-        }).render(container)
-          .then(() => {
-            log("success", "Botones renderizados");
-            this.rendering = false;
-          })
-          .catch((err) => {
-            log("error", "Error renderizando botones", err);
-            this.showError("❌ Error renderizando PayPal. Intenta recargando la página.");
-            this.rendering = false;
-          });
+        });
+
+        // Verificar que el método render existe
+        if (typeof buttonsInstance.render !== "function") {
+          throw new Error("buttonsInstance.render no es una función");
+        }
+
+        // Renderizar en el contenedor
+        await buttonsInstance.render(container);
+        log("success", "Botones PayPal renderizados correctamente");
+        this.rendering = false;
 
       } catch (err) {
         log("error", "Exception en renderButtons", err);
+        container.innerHTML = `<div style="padding:1rem; background:#f8d7da; border-radius:4px; color:#721c24;"><strong>❌ Error cargando PayPal</strong><br><small>${err.message}</small><br><br><button onclick="location.reload()" style="padding:8px 16px; background:#721c24; color:white; border:none; border-radius:4px; cursor:pointer;">Recargar página</button></div>`;
         this.showError(`Error: ${err.message}`);
         this.rendering = false;
         return false;

@@ -36,9 +36,19 @@
       this.bindEvents();
 
       // Inicializar PayPal
-      if (window.PayPal) {
+      if (window.PayPal && typeof window.PayPal.init === "function") {
         const ok = await window.PayPal.init();
         console.log(ok ? "✅ PayPal listo" : "⚠️ PayPal no disponible");
+        
+        // Si PayPal está listo, renderizar botones inmediatamente
+        if (ok && typeof window.PayPal.renderButtons === "function") {
+          console.log("🔄 Renderizando botones PayPal al iniciar...");
+          setTimeout(async () => {
+            await window.PayPal.renderButtons("paypal-button-container");
+          }, 500);
+        }
+      } else {
+        console.warn("⚠️ PayPal module no disponible");
       }
 
       console.log("✅ [Checkout v4] Listo");
@@ -253,8 +263,15 @@
         paypalMethod?.classList.add("selected");
         cardMethod?.classList.remove("selected");
 
-        if (window.PayPal) {
-          await window.PayPal.renderButtons("paypal-button-container");
+        // Renderizar botones PayPal solo si el módulo está disponible
+        if (window.PayPal && typeof window.PayPal.renderButtons === "function") {
+          console.log("🔄 Renderizando botones PayPal...");
+          const success = await window.PayPal.renderButtons("paypal-button-container");
+          if (!success) {
+            console.warn("⚠️ PayPal no se renderizó correctamente");
+          }
+        } else {
+          console.error("❌ window.PayPal no disponible o renderButtons no es función");
         }
       } else {
         paypalMethod?.classList.remove("selected");
@@ -321,8 +338,15 @@
     }
   };
 
+  // === CONFIRMACIÓN ===
+  Checkout.initConfirmacion = async function() {
+    console.log("✅ [Checkout] Página de confirmación inicializando");
+    // La página de confirmación cargará los datos del localStorage o de la URL
+  };
+
   // === INIT ===
   window.checkout = Checkout;
+  window.CheckoutSystem = Checkout;
 
   document.addEventListener("DOMContentLoaded", () => {
     Checkout.init().catch(err => {
