@@ -1,6 +1,7 @@
 {
-  "buildCommand": "",
+  "buildCommand": "echo 'Static site - no build needed'",
   "outputDirectory": "./",
+  "installCommand": "echo 'No dependencies needed'",
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
