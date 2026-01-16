@@ -510,7 +510,7 @@ window.Carrito = {
     const cartTotal = document.getElementById('cart-dropdown-total');
     
     if (cartCount) cartCount.textContent = carrito.length;
-    if (cartTotal) cartTotal.textContent = window.Helpers?.formatCRC(this.obtenerTotal()) || '₡0';
+    if (cartTotal) cartTotal.textContent = formatCRC(this.obtenerTotal()) || '₡0';
   }
 };
 
