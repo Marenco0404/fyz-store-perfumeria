@@ -1,0 +1,9 @@
+{
+  "name": "fyz-store",
+  "version": "1.0.0",
+  "description": "F&Z Store - Perfumería y Sex Shop",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static site - no build needed'"
+  }
+}
