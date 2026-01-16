@@ -1129,6 +1129,78 @@ const ProductosSystem = {
             notification.style.animation = 'slideOutRight 0.3s ease';
             setTimeout(() => notification.remove(), 300);
         }, 3000);
+    },
+    
+    // Cargar productos por categoría (usado en sexshop.html)
+    cargarProductosPorCategoria: function(categoria) {
+        console.log('📦 Cargando productos de categoría:', categoria);
+        this.categoriaActual = categoria;
+        this.cargarProductos();
+    },
+    
+    // Aplicar filtro en sex shop (usado en sexshop.html)
+    aplicarFiltroSexshop: function(filtro) {
+        console.log('🔍 Aplicando filtro sex shop:', filtro);
+        
+        let productosFiltrados = [...this.productos];
+        
+        // Aplicar filtros según selección
+        switch(filtro) {
+            case 'featured':
+                productosFiltrados = productosFiltrados.filter(p => p.destacado === true);
+                break;
+            case 'new':
+                // Productos creados en los últimos 30 días
+                const hace30Dias = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+                productosFiltrados = productosFiltrados.filter(p => {
+                    const fecha = new Date(p.fechaCreacion || p.fechaActualizacion || 0);
+                    return fecha > hace30Dias;
+                });
+                break;
+            case 'bestsellers':
+                // Ordenar por cantidad vendida
+                productosFiltrados.sort((a, b) => (b.vendidos || 0) - (a.vendidos || 0));
+                break;
+            case 'all':
+            default:
+                // Mostrar todos (ya están filtrados por categoría)
+                break;
+        }
+        
+        this.productosFiltrados = productosFiltrados;
+        
+        // Renderizar
+        const container = this.getProductsContainer();
+        if (container) {
+            this.renderizarProductosGrid(productosFiltrados, container);
+        }
+    },
+    
+    // Filtrar por subcategoría en sex shop
+    filtrarPorSubcategoria: function(subcategoria) {
+        console.log('🔍 Filtrando por subcategoría:', subcategoria);
+        
+        let productosFiltrados = [...this.productos];
+        
+        if (subcategoria && subcategoria !== 'all') {
+            // Normalizar para comparar
+            const subNormalizada = this.normalizar(subcategoria);
+            productosFiltrados = productosFiltrados.filter(p => 
+                this.normalizar(p.subcategoria || '') === subNormalizada ||
+                this.normalizar(p.tipoProducto || '') === subNormalizada
+            );
+        }
+        
+        this.productosFiltrados = productosFiltrados;
+        
+        // Actualizar contador
+        this.actualizarContadorProductos();
+        
+        // Renderizar
+        const container = this.getProductsContainer();
+        if (container) {
+            this.renderizarProductosGrid(productosFiltrados, container);
+        }
     }
 };
 

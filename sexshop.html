@@ -441,20 +441,25 @@
                 });
             }
             
-            // Cargar productos sexshop
-            if (typeof productos !== 'undefined') {
-                productos.cargarProductosPorCategoria('sexshop');
-            }
-            
-            // Filtro de productos
+            // Filtro de productos (ProductosSystem ya se inicializa vía app.js)
             const sexshopFilter = document.getElementById('sexshop-filter');
             if (sexshopFilter) {
                 sexshopFilter.addEventListener('change', function() {
-                    if (typeof productos !== 'undefined') {
-                        productos.aplicarFiltroSexshop(this.value);
+                    if (typeof ProductosSystem !== 'undefined') {
+                        ProductosSystem.aplicarFiltroSexshop(this.value);
                     }
                 });
             }
+            
+            // Configurar eventos de categorías (subcategorías dinámicas)
+            document.querySelectorAll('.sexshop-category').forEach(card => {
+                card.addEventListener('click', function() {
+                    const subcat = this.dataset.subcat;
+                    if (subcat && typeof ProductosSystem !== 'undefined') {
+                        ProductosSystem.filtrarPorSubcategoria(subcat);
+                    }
+                });
+            });
             
             // Menú móvil se inicializa globalmente en js/app.js
             

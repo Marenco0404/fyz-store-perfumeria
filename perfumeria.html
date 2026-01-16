@@ -296,20 +296,30 @@
             const productSearch = document.getElementById('product-search');
             const viewBtns = document.querySelectorAll('.view-btn');
             
-            // Cargar categorías dinámicamente
+            // Cargar categorías dinámicamente (REPARADO)
             async function cargarCategorias() {
                 try {
-                    const categoriasSnapshot = await db.collection('categorias')
-                        .where('estado', '==', 'active')
-                        .where('slug', '==', 'perfumeria')
-                        .get();
+                    // Obtener todas las categorías sin filtros compuestos
+                    const categoriasSnapshot = await db.collection('categorias').get();
                     
                     categoriasSnapshot.forEach(doc => {
                         const categoria = doc.data();
+                        const estado = (categoria.estado || 'active').toLowerCase();
+                        
+                        // Filtrar localmente para evitar índices compuestos
+                        if (estado !== 'active') return;
+                        
+                        const slug = (categoria.slug || '').toLowerCase();
+                        // En perfumería, mostrar todas las subcategorías de perfume si existen
+                        // o simplemente procesar lo que haya
+                        
+                        // Evitar duplicados con "Todas"
+                        if (doc.id === 'all' || slug === 'all') return;
+                        
                         const btn = document.createElement('button');
                         btn.className = 'filter-btn';
                         btn.dataset.filter = doc.id;
-                        btn.textContent = categoria.nombre;
+                        btn.textContent = categoria.nombre || doc.id;
                         categoryFilters.appendChild(btn);
                     });
                     
@@ -322,23 +332,22 @@
                         });
                     });
                     
+                    console.log('✅ Categorías cargadas correctamente');
+                    
                 } catch (error) {
-                    console.error('Error cargando categorías:', error);
+                    console.error('❌ Error cargando categorías:', error);
                 }
             }
             
             // Aplicar filtros
             function aplicarFiltros() {
-                const filtros = {
-                    categoria: document.querySelector('.filter-btn.active').dataset.filter,
-                    precioMax: parseInt(priceRange.value),
-                    orden: sortSelect.value,
-                    busqueda: productSearch.value.trim()
-                };
-                
-                if (typeof productos !== 'undefined') {
-                    productos.aplicarFiltros(filtros);
+                if (typeof ProductosSystem === 'undefined') {
+                    console.warn('⚠️ ProductosSystem no está disponible');
+                    return;
                 }
+                
+                // Simplemente llamar a configurarFiltros que maneja los inputs de la página
+                ProductosSystem.configurarFiltros();
             }
             
             // Event listeners
